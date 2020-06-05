@@ -10,6 +10,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/grpclog"
+	"google.golang.org/grpc/status"
 )
 
 func GetDirector(config Config) func(context.Context, string) (context.Context, *grpc.ClientConn, error) {
@@ -34,13 +35,13 @@ func GetDirector(config Config) func(context.Context, string) (context.Context, 
 					return ctx, conn, err
 				}
 				grpclog.Fatalf("Failed to create TLS credentials")
-				return ctx, nil, grpc.Errorf(codes.FailedPrecondition, "Backend TLS is not configured properly in grpc-proxy")
+				return ctx, nil, status.Errorf(codes.FailedPrecondition, "Backend TLS is not configured properly in grpc-proxy")
 			}
 		}
 		if config.Verbose {
 			fmt.Println("Not found: ", fullMethodName)
 		}
-		return ctx, nil, grpc.Errorf(codes.Unimplemented, "Unknown method")
+		return ctx, nil, status.Errorf(codes.Unimplemented, "Unknown method")
 	}
 }
 
