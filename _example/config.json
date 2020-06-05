@@ -1,0 +1,10 @@
+{
+  "verbose": true,
+  "listen": "localhost:50051",
+  "backends": [
+    {
+      "backend": "localhost:3001",
+      "filter": "/echo.EchoService/Echo"
+    }
+  ]
+}
