@@ -6,8 +6,8 @@ import (
 	"net"
 	"os"
 
-	"github.com/mwitkow/grpc-proxy/proxy"
 	"github.com/vvatanabe/grpc-proxyd/extras"
+	"github.com/vvatanabe/grpc-proxyd/internal/proxy"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/grpclog"
@@ -46,7 +46,7 @@ func main() {
 func GetServer(config extras.Config) *grpc.Server {
 	var opts []grpc.ServerOption
 
-	opts = append(opts, grpc.CustomCodec(proxy.Codec()),
+	opts = append(opts, grpc.CustomCodec(proxy.NewCodec()),
 		grpc.UnknownServiceHandler(proxy.TransparentHandler(extras.GetDirector(config))))
 
 	if config.CertFile != "" && config.KeyFile != "" {

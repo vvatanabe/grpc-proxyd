@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/mwitkow/grpc-proxy/proxy"
+	"github.com/vvatanabe/grpc-proxyd/internal/proxy"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/credentials"
@@ -24,13 +24,13 @@ func GetDirector(config Config) func(context.Context, string) (context.Context, 
 					fmt.Printf("Found: %s > %s \n", fullMethodName, backend.Backend)
 				}
 				if backend.CertFile == "" {
-					conn, err := grpc.DialContext(ctx, backend.Backend, grpc.WithCodec(proxy.Codec()),
+					conn, err := grpc.DialContext(ctx, backend.Backend, grpc.WithDefaultCallOptions(grpc.ForceCodec(proxy.NewCodec())),
 						grpc.WithInsecure())
 					return ctx, conn, err
 				}
 				creds := GetCredentials(credentialsCache, backend)
 				if creds != nil {
-					conn, err := grpc.DialContext(ctx, backend.Backend, grpc.WithCodec(proxy.Codec()),
+					conn, err := grpc.DialContext(ctx, backend.Backend, grpc.WithDefaultCallOptions(grpc.ForceCodec(proxy.NewCodec())),
 						grpc.WithTransportCredentials(creds))
 					return ctx, conn, err
 				}
