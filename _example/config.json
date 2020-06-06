@@ -9,6 +9,10 @@
     {
       "backend": "localhost:3002",
       "filter": "/download.DownloadService/Download"
+    },
+    {
+      "backend": "loqcalhost:3003",
+      "filter": "/upload.UploadService/Upload"
     }
   ]
 }

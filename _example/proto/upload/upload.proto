@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package upload;
+
+message UploadRequest {
+  string name = 1;
+  bytes data = 2;
+}
+
+message UploadResponse {
+  int64 size = 1;
+}
+
+service UploadService {
+  rpc Upload (stream UploadRequest) returns (UploadResponse);
+}
