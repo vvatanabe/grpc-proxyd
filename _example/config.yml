@@ -1,0 +1,9 @@
+verbose: true
+port: 50051
+routes:
+  - match: "/echo.EchoService/Echo"
+    addr: "localhost:3001"
+  - match: "/download.DownloadService/Download"
+    addr: "localhost:3002"
+  - match: "/upload.UploadService/Upload"
+    addr: "localhost:3003"
