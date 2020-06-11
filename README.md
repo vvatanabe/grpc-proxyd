@@ -16,17 +16,17 @@ $ go get github.com/vvatanabe/grpc-proxyd
 
 ## Usage
 
-```sh
+```
 Usage:
   grpc-proxyd [flags]
 
 Flags:
-      --cert_file string   cert file path [GRPC_PROXYD_CERT_FILE]
   -c, --config string      config file path (default "config.yml")
-  -h, --help               help for grpc-proxyd
-      --key_file string    key file path [GRPC_PROXYD_KEY_FILE]
   -p, --port int           listen port [GRPC_PROXYD_PORT] (default 50051)
+      --cert_file string   cert file path [GRPC_PROXYD_CERT_FILE]
+      --key_file string    key file path [GRPC_PROXYD_KEY_FILE]
   -v, --verbose            debug mode [GRPC_PROXYD_VERBOSE]
+  -h, --help               help for grpc-proxyd
 ```
 
 ## Config File
@@ -34,13 +34,15 @@ Flags:
 ### YAML
 
 ```yaml
+verbose: true
+port: 50051
 routes:
-  - match: "/echo.EchoService/Echo"
-    addr: "localhost:3001"
-  - match: "/download.DownloadService/Download"
-    addr: "localhost:3002"
-  - match: "/upload.UploadService/Upload"
-    addr: "localhost:3003"
+  - match: /echo.EchoService/Echo
+    addr: localhost:3001
+  - match: /download.DownloadService/Download
+    addr: localhost:3002
+  - match: /upload.UploadService/Upload
+    addr: localhost:3003
 ```
 
 ## Acknowledgments
